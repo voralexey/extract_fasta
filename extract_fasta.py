@@ -1,10 +1,19 @@
-with open('acc_nums.txt', 'r') as data:
-    acc_numbs = data.readlines() # list
+#############################################################
+# Extract fasta sequences using a list of accession numbers #
+# AV                                                        #
+# 10-2-2022                                                 #
+#############################################################
+
+# list of accession  numbers
+with open('acc_nums.txt', 'r') as data: # CHECK file name
+    acc_numbs = data.readlines() # list type
     print(acc_numbs)
 
-with open('test2_origin.fasta', 'r') as origin_fasta:
+# original fasta file
+with open('test2_origin.fasta', 'r') as origin_fasta: # CHECK file name
     input_fasta = origin_fasta.readlines()
 
+# final fasta file
 parsed_fasta = open('fasta_parsed.txt', 'w')
 
 ACCNUM_DICT = {}
@@ -15,10 +24,10 @@ print(ACCNUM_DICT)
 skip = 0
 for line in input_fasta:
     if line[0] == '>':  # should I use "^>"?
-        _splitline = line.split(' ')  # split by space (CHECK HEADER FORMAT)
-        accessionNumWithArrow = _splitline[0] # select >AccessionNumber
-        long_acc_num_line = accessionNumWithArrow.split(".")
-        long_acc_num = long_acc_num_line[0]
+        split_header = line.split(' ')  # split header by space (CHECK HEADER FORMAT)
+        acc_num_greater_than = split_header[0] # select >LongAccessionNumber
+        long_acc_num_line = acc_num_greater_than.split(".") # split by "."
+        long_acc_num = long_acc_num_line[0] # select >AccessionNumber
         accessionNum = long_acc_num[1:] # skip ">"
         print(accessionNum)
         if accessionNum in ACCNUM_DICT:
